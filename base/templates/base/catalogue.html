@@ -1,0 +1,15 @@
+<h1>Products List:</h1>
+
+
+{%for category in categories%} 
+    <h2>{{category.id}}. {{Category.name}}</h2>
+    {%for product in products%}
+        {%if product.category == category%}
+            <h4>- {{product.name}}</h4>
+            <h4>- {{product.price}}</h4>
+            <h4>- {{product.description}}</h4>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+
