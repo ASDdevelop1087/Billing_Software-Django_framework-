@@ -1,0 +1,22 @@
+h1{
+    color: #ff9d00;
+    background-color: black;
+    text-align: center;
+
+
+
+
+
+
+}
+body{
+    margin: 0;
+}
+
+.info-card{
+    width: 200px ;
+    height: 200px ;
+    display: grid ;
+    grid-template-columns: repeat(auto-fit,minmax(300px,1fr)) ;
+}
+

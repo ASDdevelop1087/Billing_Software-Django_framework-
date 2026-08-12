@@ -1,15 +1,25 @@
-<h1>Products List:</h1>
+{% load static %}
+<h1 class="test">Products List:</h1>
+
+<head>
+  <link rel="stylesheet" href="{% static 'base/css/style.css' %}" />
+</head>
+
+{% for category in categories %}
+<div class="info-card">
+  <h2>{{category.id}}. {{category.name}}</h2>
+  {% for product in products %} 
+    {% if product.category == category %}
+      <li>- name: <b>{{product.name}}</b></li>
+      <li>- stock: {{product.stock}}</li>
+      <li>- price: {{product.price}}</li>
+      {% if product.description %}
+        <li>- description: {{product.description}}</li>
+      {% endif %}
+      <hr />
+    {% endif %}
+  {% endfor %}
+</div>
 
 
-{%for category in categories%} 
-    <h2>{{category.id}}. {{Category.name}}</h2>
-    {%for product in products%}
-        {%if product.category == category%}
-            <h4>- {{product.name}}</h4>
-            <h4>- {{product.price}}</h4>
-            <h4>- {{product.description}}</h4>
-        {% endif %}
-    {% endfor %}
 {% endfor %}
-
-
