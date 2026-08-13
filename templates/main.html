@@ -1,12 +1,22 @@
 
-<a href="/">
-  <h2>HomePage</h2>
-</a>
-<a href="{% url 'catalogue' %}">
-  <h2>Catalogue</h2>
-</a>
+<head>
+  <meta charset="UTF-8">
+  <a href="/">
+    <h2>HomePage</h2>
+  </a>
+  <a href="{% url 'catalogue' %}">
+    <h2>Catalogue</h2>
+    </a>
+    <form action="{% url 'catalogue' %}" method="GET">
+      <input type="search" name="q" placeholder="Search..." />
+    </form>
 
+
+</head>
+
+<body>
 {%block content%} 
 
 {%endblock content%}
+</body>
 

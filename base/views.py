@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from .forms import ProductForm, CategorieForm
+from django.db.models import Q
 
 from base.models import Product, Categorie
 
@@ -12,16 +13,25 @@ def home(request):
 
 
 def catalogue(request):
-    # Fetching data from models
-    all_products = Product.objects.all()
-    all_categories = Categorie.objects.all()
-
-    # context dictionary
+    q = request.GET.get('q')
+    
+    if q:
+        filtered_categories = Categorie.objects.filter(name__icontains=q)
+        filtered_products = Product.objects.filter(
+            Q(name__icontains=q) |
+              Q(description__icontains=q))
+    else:
+        filtered_categories = Categorie.objects.all()
+        filtered_products = Product.objects.all()
+    uncategorized_products = Product.objects.filter(category__isnull=True)
+    categories = Categorie.objects.all()
     context = {
-        'products': all_products,       # Key used in template: {{ products }}
-        # Key used in template: {{ categories }}
-        'categories': all_categories,
-        'num': 0,
+        'products': filtered_products,
+        'categories': categories,
+        'filtered_categories': filtered_categories,
+        'uncategorized_products': uncategorized_products,
+        'q': q,
+        'count': filtered_categories.count(),
     }
     return render(request, "base/catalogue.html", context)
 
