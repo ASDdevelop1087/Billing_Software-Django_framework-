@@ -1,3 +1,7 @@
+{% extends "main.html" %}
+
+{% block content %}
+
 {% load static %}
 <h1 class="test">Products List:</h1>
 
@@ -5,21 +9,58 @@
   <link rel="stylesheet" href="{% static 'base/css/style.css' %}" />
 </head>
 
-{% for category in categories %}
+
 <div class="info-card">
-  <h2>{{category.id}}. {{category.name}}</h2>
-  {% for product in products %} 
-    {% if product.category == category %}
-      <li>- name: <b>{{product.name}}</b></li>
-      <li>- stock: {{product.stock}}</li>
-      <li>- price: {{product.price}}</li>
-      {% if product.description %}
-        <li>- description: {{product.description}}</li>
+  {% for category in categories%}
+    <h2>
+      {{category.id}}. {{category.name}}
+      <a href="{% url 'update-category' category.id %}">edit</a>
+      <a href="{% url 'delete-category' category.id %}">delete</a>
+    </h2>
+    {% for product in category.products.all %} 
+      {% if product.category == category %}
+        <li>- name: <b>{{product.name}}</b></li>
+        <li>- stock: {{product.stock}}</li>
+        <li>- price: {{product.price}}</li>
+        {% if product.description %}
+          <li>- description: {{product.description}}</li>
+        {% endif %}
+
+        <a href="{% url 'update-product' product.id %}">edit</a>
+        <a href="{% url 'delete-product' product.id %}">delete</a>
+        <hr />
       {% endif %}
-      <hr />
-    {% endif %}
-  {% endfor %}
+
+      {% empty %}
+        <p><b>{the category is empty}</b></p>
+    {% endfor %}
+
+  {% endfor%}
 </div>
 
 
-{% endfor %}
+<div>
+  {% if None in categories  %}
+    <h2>Un-Categorized</h2>
+    {% for product in products %}
+      {% if product.category == None %}
+        <li>- name: <b>{{product.name}}</b></li>
+        <li>- stock: {{product.stock}}</li>
+        <li>- price: {{product.price}}</li>
+        {% if product.description %}
+          <li>- description: {{product.description}}</li>
+        {% endif %}
+        <a href="{% url 'update-product' product.id %}">
+          edit
+        </a>
+        <a href="{% url 'delete-product' product.id %}">
+          delete
+        </a>
+        <hr />
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock content %}
+

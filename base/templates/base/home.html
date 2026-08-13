@@ -1,17 +1,15 @@
-<!doctype html>
-{% extends "navbar.html" %} {%block content%}
-<a href="index/">
-  <h2>Index</h2>
+
+{% extends "main.html" %} 
+
+{%block content%}
+
+<a href = "{% url 'create-product' %}">
+    Add Product
 </a>
-<hr />
-<h1>Hello! World</h1>
-<hr />
-<h5>
-  <i>This is home page</i>
-</h5>
-<select>
-  <option>Hello</option>
-  <option>World</option>
-  <option>Yes</option>
-</select>
+<br>
+<a href="{% url 'create-category' %}">
+    Add Categorie
+</a>
+
+
 {%endblock content%}
