@@ -9,10 +9,7 @@
   <link rel="stylesheet" href="{% static 'base/css/style.css' %}" />
 </head>
 <style>
-  .info-card{
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-}
+
 </style>
 
 <div class="info-card">
@@ -25,78 +22,80 @@
       <a href="?q={{category.name}} ">{{category.name}}</a>
       <br>
     {% endfor %}
-  </div>
-
+  </div>  
 
   <div>
-    {% for category in filtered_categories%}
-      <h2>
-        {{category.name}}
-        <a href="{% url 'update-category' category.id %}">edit</a>
-        <a href="{% url 'delete-category' category.id %}">delete</a>
-      </h2>
-      {% for product in category.products.all %} 
-        {% if product.category == category %}
-          <li>- name: <b>{{product.name}}</b></li>
-          <li>- stock: {{product.stock}}</li>
-          <li>- price: {{product.price}}</li>
-          {% if product.description %}
-            <li>- description: {{product.description}}</li>
+    <div>
+      {% for category in filtered_categories%}
+        <h2>
+          {{category.name}}
+          <a href="{% url 'update-category' category.id %}">edit</a>
+          <a href="{% url 'delete-category' category.id %}">delete</a>
+        </h2>
+        {% for product in category.products.all %} 
+          {% if product.category == category %}
+            <p>- name: <b>{{product.name}}</b></p>
+            <p>- stock: {{product.stock}}</p>
+            <p>- price: {{product.price}}</p>
+            {% if product.description %}
+              <p>- description: {{product.description}}</p>
+            {% endif %}
+
+            <a href="{% url 'update-product' product.id %}">edit</a>
+            <a href="{% url 'delete-product' product.id %}">delete</a>
+            <hr/>
           {% endif %}
 
-          <a href="{% url 'update-product' product.id %}">edit</a>
-          <a href="{% url 'delete-product' product.id %}">delete</a>
-          <hr/>
-        {% endif %}
+          {% empty %}
+            <p><b>{the category is empty}</b></p>
+        {% endfor %}
 
-        {% empty %}
-          <p><b>{the category is empty}</b></p>
-      {% endfor %}
+      {% endfor%}
+    </div>
 
-    {% endfor%}
-  </div>
-
-
-  <div>
-    {% if not q%}
+    <div>
+      {% if not q%}
       <h2>Un-Categorized Products</h2>
       {% for product in uncategorized_products %}
-          
-        <li>- name: <b>{{product.name}}</b></li>
-        <li>- stock: {{product.stock}}</li>
-        <li>- price: {{product.price}}</li>
-        {% if product.description %}
-          <li>- description: {{product.description}}</li>
-        {% endif %}
-        <a href="{% url 'update-product' product.id %}">
-          edit
-        </a>
-        <a href="{% url 'delete-product' product.id %}">
-          delete
-        </a>
-        <hr />
+    
+      <p>- name: <b>{{product.name}}</b></p>
+      <p>- stock: {{product.stock}}</p>
+      <p>- price: {{product.price}}</p>
+      {% if product.description %}
+      <p>- description: {{product.description}}</p>
+      {% endif %}
+      <a href="{% url 'update-product' product.id %}">
+        edit
+      </a>
+      <a href="{% url 'delete-product' product.id %}">
+        delete
+      </a>
+      <hr />
       {% endfor %}
-    {% endif%}
+      {% endif%}
+    </div>
+
+    <div>
+      {% if q and not count > 0%}
+      {% for product in products %}
+      <p>- name: <b>{{product.name}}</b></p>
+      <p>- stock: {{product.stock}}</p>
+      <p>- price: {{product.price}}</p>
+      {% if product.description %}
+      <p>- description: {{product.description}}</p>
+      {% endif %}
+    
+      <a href="{% url 'update-product' product.id %}">edit</a>
+      <a href="{% url 'delete-product' product.id %}">delete</a>
+      <hr />
+    
+    
+      {% endfor %}
+      {% endif %}
+      </div>
+
   </div>
 
-  <div>
-    {% if q and not count > 0%}
-    {% for product in products %}
-    <li>- name: <b>{{product.name}}</b></li>
-    <li>- stock: {{product.stock}}</li>
-    <li>- price: {{product.price}}</li>
-    {% if product.description %}
-    <li>- description: {{product.description}}</li>
-    {% endif %}
-  
-    <a href="{% url 'update-product' product.id %}">edit</a>
-    <a href="{% url 'delete-product' product.id %}">delete</a>
-    <hr />
-  
-  
-    {% endfor %}
-    {% endif %}
-  </div>
 
 </div>
 

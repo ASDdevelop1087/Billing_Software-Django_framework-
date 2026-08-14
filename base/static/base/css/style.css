@@ -1,3 +1,5 @@
+
+
 h1{
     color: #ff9d00;
     background-color: black;
@@ -7,6 +9,11 @@ h1{
 
 body{
     margin: 0;
+}
+
+div.info-card{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
 }
 
 
